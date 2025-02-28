@@ -1,4 +1,4 @@
-<div class="min-h-dvh p-9 bg-github-bg">
+<div class="min-h-dvh py-9 px-4 bg-github-bg">
   <router-outlet />
 
   <div *ngIf="userProfile" class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -7,8 +7,7 @@
       class="flex flex-col items-start lg:max-w-[320px] pb-4 md:pb-0 border-b-[0.011rem] border-gray-500 md:border-b-0">
       <div class="flex flex-row gap-5 md:flex-col">
         <img [src]="userProfile.avatar" alt="Avatar"
-          class="border border-gray-600 w-24 h-24 md:w-80 md:h-80 rounded-full object-cover">
-
+          class="border border-gray-600 size-24 md:size-full object-cover rounded-full">
         <div>
           <h2 *ngIf="userProfile.name" class="text-2xl font-semibold text-gray-200 mt-4">{{ userProfile.name }}</h2>
           <p class="text-lg text-gray-400 font-light">{{userProfile.username}}</p>
@@ -60,7 +59,7 @@
     <!-- following list -->
     <div class="mt-6 md:mt-0 md:col-span-2">
       <div *ngIf="isLoadingFollowings">
-        <p class="text-center text-gray-500">Carregando usuários seguidos...</p>
+        <p class="text-center text-gray-500 animate-pulse">Carregando usuários seguidos...</p>
       </div>
 
       <div *ngIf="followings.length > 0">
@@ -74,16 +73,16 @@
           <div class="flex flex-col items-start gap-2">
             <h3 class="text-gray-100 text-md">{{following.name}} <span
                 class="ml-1.5 text-gray-400">{{following.username}}</span></h3>
-            <p class="text-sm text-gray-400">{{following.bio}}</p>
+            <p class="text-xs text-gray-400">{{following.bio}}</p>
 
             <div class="flex gap-5">
               <div *ngIf="following.company" class="flex items-center gap-1">
                 <ng-icon color="#99a1af" name="heroBuildingOffice2" size="18px" />
-                <span class="text-gray-400">{{following.company}}</span>
+                <span class="text-gray-400 text-xs">{{following.company}}</span>
               </div>
               <div *ngIf="following.location" class="flex items-center gap-1">
                 <ng-icon color="#99a1af" name="heroMapPin" size="18px" />
-                <span class="text-gray-400">{{following.location}}</span>
+                <span class="text-gray-400 text-xs">{{following.location}}</span>
               </div>
             </div>
           </div>
@@ -93,6 +92,6 @@
   </div>
 
   <div *ngIf="userProfile === null">
-    <p class="text-center text-gray-500">Carregando perfil...</p>
+    <p class="text-center text-gray-500 animate-pulse">Carregando perfil...</p>
   </div>
 </div>
