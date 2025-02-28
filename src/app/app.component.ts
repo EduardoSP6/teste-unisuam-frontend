@@ -10,30 +10,22 @@ import { ApiService } from './services/api.service';
 import { User } from './models/user.model';
 import { CommonModule } from '@angular/common';
 import { FollowingUser } from './models/following-user.model';
-import { NgIcon, provideIcons } from '@ng-icons/core';
 import { FormsModule } from '@angular/forms';
-import {
-  heroEnvelope,
-  heroLink,
-  heroUsers,
-  heroBuildingOffice2,
-  heroMapPin,
-} from '@ng-icons/heroicons/outline';
 import { LoadingComponent } from './loading-component/loading-component';
+import { ProfileComponent } from './profile/profile.component';
+import { FollowingsListComponent } from './followings-list/followings-list.component';
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [RouterOutlet, CommonModule, FormsModule, NgIcon, LoadingComponent],
-  viewProviders: [
-    provideIcons({
-      heroEnvelope,
-      heroLink,
-      heroUsers,
-      heroBuildingOffice2,
-      heroMapPin,
-    }),
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    FormsModule,
+    LoadingComponent,
+    ProfileComponent,
+    FollowingsListComponent,
   ],
 })
 export class AppComponent implements OnInit {

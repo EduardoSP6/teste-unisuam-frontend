@@ -1,0 +1,21 @@
+<ul class="mt-3" *ngFor="let following of followings">
+    <li class="flex items-start gap-3 px-2 py-6 border-b-[0.011rem] border-gray-500">
+      <img [src]="following.avatar" alt="Avatar" class="w-24 h-24 rounded-full border border-gray-600">
+      <div class="flex flex-col items-start gap-2">
+        <h3 class="text-gray-100 text-md">{{following.name}} <span
+            class="ml-1.5 text-gray-400">{{following.username}}</span></h3>
+        <p class="text-xs text-gray-400">{{following.bio}}</p>
+
+        <div class="flex gap-5">
+          <div *ngIf="following.company" class="flex items-center gap-1">
+            <ng-icon color="#99a1af" name="heroBuildingOffice2" size="18px" />
+            <span class="text-gray-400 text-xs">{{following.company}}</span>
+          </div>
+          <div *ngIf="following.location" class="flex items-center gap-1">
+            <ng-icon color="#99a1af" name="heroMapPin" size="18px" />
+            <span class="text-gray-400 text-xs">{{following.location}}</span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>

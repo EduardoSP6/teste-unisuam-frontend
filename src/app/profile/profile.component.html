@@ -1,0 +1,53 @@
+<div class="flex flex-col items-start lg:max-w-[320px] pb-4 md:pb-0 border-b-[0.011rem] border-gray-500 md:border-b-0">
+    <div class="flex flex-row gap-5 md:flex-col">
+        <img [src]="userProfile.avatar" alt="Avatar"
+            class="border border-gray-600 size-24 md:size-full object-cover rounded-full">
+        <div>
+            <h2 *ngIf="userProfile.name" class="text-2xl font-semibold text-gray-200 mt-4">{{ userProfile.name }}</h2>
+            <p class="text-lg text-gray-400 font-light">{{userProfile.username}}</p>
+        </div>
+    </div>
+
+    <p *ngIf="userProfile.bio" class="mt-6 text-gray-100 text-lg">{{userProfile.bio}}</p>
+
+    <button
+        class="order-2 md:order-1 mt-4 w-full py-1 rounded-md border-[0.01rem] border-gray-600 text-gray-200 bg-gray-800 cursor-pointer">Follow</button>
+
+    <div class="order-1 md:order-2">
+        <div class="mt-4 flex items-center text-sm">
+            <div class="flex items-center">
+                <ng-icon color="#99a1af" name="heroUsers" size="18px" />
+                <span class="ml-2 text-gray-100 font-semibold">{{userProfile.followers}}</span>
+                <span class="ml-1 text-gray-400">followers</span>
+            </div>
+            <p>
+                <span class="ml-2 text-gray-100 font-semibold">- {{userProfile.followers}}</span>
+                <span class="ml-1 text-gray-400">following</span>
+            </p>
+        </div>
+
+        <div class="mt-2 flex flex-col items-start gap-2 text-sm">
+            <div *ngIf="userProfile.company" class="hidden md:flex items-center gap-2">
+                <ng-icon color="#99a1af" name="heroBuildingOffice2" size="18px" />
+                <span class="text-gray-100 font-semibold">{{userProfile.company}}</span>
+            </div>
+
+            <div *ngIf="userProfile.location" class="hidden md:flex items-center gap-2">
+                <ng-icon color="#99a1af" name="heroMapPin" size="18px" />
+                <span class="text-gray-100 font-semibold">{{userProfile.location}}</span>
+            </div>
+
+            <a *ngIf="userProfile.email" href="mailto:{{userProfile.email}}" class="flex items-center gap-2">
+                <ng-icon color="#99a1af" name="heroEnvelope" size="18px" />
+                <span
+                    class="text-gray-100 font-semibold hover:text-blue-400 hover:underline">{{userProfile.email}}</span>
+            </a>
+
+            <a *ngIf="userProfile.blogUrl" href="{{userProfile.blogUrl}}" class="flex items-center gap-2">
+                <ng-icon color="#99a1af" name="heroLink" size="18px" />
+                <span
+                    class="text-gray-100 font-semibold hover:text-blue-400 hover:underline">{{userProfile.blogUrl}}</span>
+            </a>
+        </div>
+    </div>
+</div>
