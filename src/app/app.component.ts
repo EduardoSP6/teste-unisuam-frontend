@@ -19,13 +19,13 @@ import {
   heroBuildingOffice2,
   heroMapPin,
 } from '@ng-icons/heroicons/outline';
-
+import { LoadingComponent } from './loading-component/loading-component';
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [RouterOutlet, CommonModule, FormsModule, NgIcon],
+  imports: [RouterOutlet, CommonModule, FormsModule, NgIcon, LoadingComponent],
   viewProviders: [
     provideIcons({
       heroEnvelope,
@@ -39,11 +39,13 @@ import {
 export class AppComponent implements OnInit {
   @Input() username!: string;
 
-  userProfile!: User;
+  userProfile: User | null = null;
   followings: FollowingUser[] = [];
   originalFollowings: FollowingUser[] = [];
   searchQuery: string = '';
   isLoadingFollowings: boolean = false;
+  isLoadingProfile: boolean = false;
+  errorMessage: string = '';
 
   private route = inject(ActivatedRoute);
   private apiService = inject(ApiService);
@@ -59,24 +61,56 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Obtem dados do perfil
+   */
   loadUserProfile() {
-    this.apiService.getUserProfile(this.username).subscribe((user) => {
-      this.userProfile = user;
-      this.cdr.detectChanges();
-    });
+    this.userProfile = null;
+    this.errorMessage = '';
+    try {
+      this.isLoadingFollowings = true;
+      this.apiService.getUserProfile(this.username).subscribe((user) => {
+        if (user) {
+          this.userProfile = user;
+        } else {
+          this.errorMessage =
+            'Perfil não encontrado. Verifique o username digitado.';
+        }
+        this.isLoadingProfile = false;
+        this.cdr.detectChanges();
+      });
+    } catch (error) {
+      console.error('Erro ao buscar o perfil: ', error);
+      this.errorMessage =
+        'Ocorreu um erro ao buscar o perfil. Tente novamente mais tarde.';
+    }
   }
 
+  /**
+   * Obtem coleção de usuarios seguidos.
+   */
   loadUserFollowings() {
-    this.isLoadingFollowings = true;
-    this.apiService.getUserFollowings(this.username).subscribe((data) => {
-      this.followings = data;
-      this.originalFollowings = data;
-      this.isLoadingFollowings = false;
-      this.cdr.detectChanges();
-    });
+    try {
+      this.isLoadingFollowings = true;
+      this.apiService.getUserFollowings(this.username).subscribe((data) => {
+        this.followings = data;
+        this.originalFollowings = data;
+        this.isLoadingFollowings = false;
+        this.cdr.detectChanges();
+      });
+    } catch (error) {
+      console.error(
+        `Erro ao buscar usuários seguidos do ${this.username}: `,
+        error
+      );
+    }
   }
 
-  filterFollowings() {
+  /**
+   * Filtro de usuarios seguidos.
+   * @returns
+   */
+  filterFollowings(): void {
     const query = this.searchQuery.toLowerCase();
 
     if (query.length === 0) {

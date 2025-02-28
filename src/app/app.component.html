@@ -58,15 +58,20 @@
 
     <!-- following list -->
     <div class="mt-6 md:mt-0 md:col-span-2">
-      <div *ngIf="isLoadingFollowings">
-        <p class="text-center text-gray-500 animate-pulse">Carregando usuários seguidos...</p>
+
+      <app-loading *ngIf="isLoadingFollowings" message="Carregando usuários seguidos..."></app-loading>
+
+      <div *ngIf="isLoadingFollowings === false && followings.length === 0">
+        <p class="text-center text-gray-500">Este perfil não possui usuários seguidos.</p>
       </div>
 
+      <!-- search input -->
       <div *ngIf="followings.length > 0">
         <input [(ngModel)]="searchQuery" (input)="filterFollowings()"
           class="w-full text-gray-200 border-[0.011rem] border-gray-500 px-2 py-2 rounded-md focus:outline-none"
           type="search" placeholder="Pesquisar seguidos" />
       </div>
+
       <ul class="mt-3" *ngFor="let following of followings">
         <li class="flex items-start gap-3 px-2 py-6 border-b-[0.011rem] border-gray-500">
           <img [src]="following.avatar" alt="Avatar" class="w-24 h-24 rounded-full border border-gray-600">
@@ -91,7 +96,9 @@
     </div>
   </div>
 
-  <div *ngIf="userProfile === null">
-    <p class="text-center text-gray-500 animate-pulse">Carregando perfil...</p>
+  <app-loading *ngIf="isLoadingProfile && !errorMessage" message="Carregando perfil..."></app-loading>
+
+  <div *ngIf="errorMessage.length > 0" class="mx-auto">
+    <p class="text-2xl text-center text-gray-500">{{errorMessage}}</p>
   </div>
 </div>
